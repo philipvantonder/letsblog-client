@@ -1,37 +1,14 @@
+import { defineStore } from 'pinia';
 import CategoryService from '@/services/category';
 
-export default {
+export const commentStore = defineStore('commentStore', {
 
-	namespaced: true,
-
-	state: {
-
+	state: () => ({
 		category: '', // single blog post category
 		categories: [], // blog post categories
 		linkedCategoryPosts: [] // all posts linked to a specific category
+	}),
 
-	},
-
-	mutations: {
-
-		SET_CATEGORIES(state, categories) {
-			state.categories = categories;
-		},
-
-		REMOVE_CATEGORY(state, id) {
-			let category_index = state.categories.map(({ category }) => category.id).indexOf(id);
-			state.categories.splice(category_index, 1);
-		},
-
-		SET_CATEGORY(state, category) {
-			state.category = category;
-		},
-
-		SET_LINKED_CATEGORIES(state, posts) {
-			state.linkedCategoryPosts = posts;
-		},
-
-	},
 
 	getters: {
 
@@ -41,7 +18,7 @@ export default {
 
 	actions: {
 
-		async checkUniqueCategory (context, postDTO) {
+		async checkUniqueCategory (postDTO: any) {
 
 			const { newSlug } = await CategoryService.checkUniqueCategory(postDTO);
 
@@ -49,56 +26,56 @@ export default {
 
 		},
 
-		async setCategories({ commit }) {
+		async setCategories() {
 
 			const { categories } = await CategoryService.getCategories();
 
-			commit('SET_CATEGORIES', categories);
-
+			this.categories = categories;
 		},
 
-		async createCategory (context, postDTO) {
+		async createCategory (postDTO: any) {
 
 			await CategoryService.createCategory(postDTO);
 
 		},
 
-		async removeCategory ({ commit }, id) {
+		async removeCategory (id: number) {
 
 			await CategoryService.removeCategory(id);
 
-			commit('REMOVE_CATEGORY', id);
+			let post_index = this.categories.map(post => post._id).indexOf(id);
+			this.categories.splice(post_index, 1);
 
 		},
 
-		async removeSubCategory (context, id) {
+		async removeSubCategory (id: number) {
 
 			await CategoryService.removeCategory(id);
 
 		},
 
-		async setCategoryById({ commit }, id) {
+		async setCategoryById(id: number) {
 				
 			const { category } = await CategoryService.getCategoryById(id);
 
-			commit('SET_CATEGORY', category);
+			this.category = category;
 
 		},
 
-		async updateCategory(context, postDTO) {
+		async updateCategory(postDTO: any) {
 
 			await CategoryService.update(postDTO);
 
 		},
 
-		async setCategoryBySlug({ commit }, slug) {
+		async setCategoryBySlug(slug: string) {
 				
 			const { posts } = await CategoryService.getCategoryBySlug(slug);
 
-			commit('SET_LINKED_CATEGORIES', posts);
+			this.linkedCategoryPosts = posts;
 
 		},
 
 	}
 
-}
+});

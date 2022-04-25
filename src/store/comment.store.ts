@@ -1,73 +1,50 @@
+import { defineStore } from 'pinia';
 import CommentService from '@/services/comment';
 
-export default {
+export const commentStore = defineStore('commentStore', {
 
-	namespaced: true,
-
-	state: {
-
+	state: () => ({
 		postComments: [],
 		userCommentLikes: [],
 		totalComments: ''
-
-	},
-
-	mutations: {
-
-		UPDATE_COMMENT(state, comment) {
-			state.postComments = comment;
-		},
-		
-		UPDATE_USER_COMMENT_LIKES(state, likes) {
-			state.userCommentLikes = likes;
-		},
-
-		UPDATE_TOTAL_COMMENT(state, totalComments) {
-			state.totalComments = totalComments;
-		}
-
-	},
-
-	getters: {
-
-	},
+	}),
 
 	actions: {
 
-		async create (context, postDTO) {
+		async create (postDTO: any) {
 
 			await CommentService.create(postDTO);
 
 		},
 
-		async setPostCommentsById({ commit }, id) {
+		async setPostCommentsById(id: number) {
 
 			const { postComments, totalComments } = await CommentService.fetchPostCommentsById(id);
 
-			commit('UPDATE_COMMENT', postComments);
-			commit('UPDATE_TOTAL_COMMENT', totalComments);
+			this.postComments = postComments;
+			this.totalComments = totalComments;
 		},
 
-		async addReply(context, postDTO) {
+		async addReply(postDTO: any) {
 
 			await CommentService.addreply(postDTO); 
 
 		},
 
-		async addLike(context, postDTO) {
+		async addLike(postDTO: any) {
 
 			await CommentService.addLike(postDTO);
 
 		},
 
-		async getUserCommentLikes({ commit }) {
+		async getUserCommentLikes() {
 
 			const { likes } = await CommentService.fetchUserCommentLikes();
 
-			commit('UPDATE_USER_COMMENT_LIKES', likes);
+			this.userCommentLikes = likes;
 	
 		}
 
 	}
 
-}
+});
