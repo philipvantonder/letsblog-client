@@ -2,33 +2,56 @@
     <div class="container">
 		<div class="row">
 			<div class="col-md-12 col-lg-6 mx-auto">
-				<div class="shadow p-3 mt-5 radius-10 bg-white">
-					<div v-if="message" v-html="message" class="alert alert-success" role="alert"></div>
-
-					<div v-if="sentEmail">
-						<a href="javascript:void(0);" class="btn btn-link" @click="resendEmail()" > Resend Email </a>
+				<div class="rounded shadow-lg mt-5 p-3">
+					<div class="d-flex justify-content-center">
+						<h2> Create your account </h2>
 					</div>
-					<div v-else>
-						<h2 class="mb-3"> Forgot Password </h2>
+					<div class="mt-3">
+						<div v-if="errorMessage" class="mt-2 alert alert-danger" :class="{ 'alert-shake': errorMessage }">  {{ errorMessage }} </div>
 
-						<form @submit.prevent="submitPasswordReset()">
+						<form @submit.prevent="registerUser()">
+							
 							<div class="mb-3">
+								<label for="name" class="font-weight-bolder">Name</label>
+								<input type="text" class="form-control" v-model="user.name" placeholder="Name" >
+							</div>
+
+							<div class="mb-3">
+								<label for="surname" class="font-weight-bolder">Surname</label>
+								<input type="text" class="form-control" v-model="user.surname" placeholder="Surname">
+							</div>
+
+							<div class="mb-3">
+								<label for="email" class="font-weight-bolder">Email</label>
 								<input type="email" class="form-control" v-model="user.email" placeholder="Email">
 								<!-- <div v-if="$v.user.email.$error" class="invalid-feedback">
-									<span v-if="!$v.user.email.email"> Email is invalid </span>
+									<span v-if="!$v.user.email.email">Email is invalid</span>
 								</div> -->
 							</div>
 							
-							<div class="d-flex alig-items center justify-content-between">
-								<div v-if="!sentEmail" >
-									<button class="btn btn-outline-primary" :disabled="loading"> {{ buttonText }} </button>
-								</div>
-								<router-link tag="a" :to="{ name: 'login' }" class="btn btn-link link-primary" >Back to Login</router-link>
+							<div class="mb-3">
+								<label for="password" class="font-weight-bolder">Password</label>
+								<input type="password" class="form-control" v-model="user.password" placeholder="Password">
+								<!-- <div class="invalid-feedback">
+									<span v-if="!$v.user.password.minLength" >Password must have at least 6 letters.</span>
+								</div> -->
+							</div>
+
+							<div class="mb-3">
+								<label for="confirmPassword" class="font-weight-bolder">Confirm Password</label>
+								<input type="password" class="form-control" v-model="user.confirmPassword" placeholder="Confirm Password">
+								<!-- <div v-if="$v.user.confirmPassword.$error" class="invalid-feedback">
+									<span v-if="!$v.user.confirmPassword.sameAsPassword">Passwords must match</span>
+								</div> -->
+							</div>
+
+							<div class="d-flex align-items-center justify-content-between">
+								<button class="btn btn-outline-primary">Register</button>
+								<router-link :to="{ name: 'login' }" class="btn btn-link link-primary"> Back to login </router-link>
 							</div>
 						</form>
 					</div>
 				</div>
-
 			</div>
 		</div>
     </div>
@@ -36,103 +59,81 @@
 
 <script>
 
-// import { required, email } from 'vuelidate/lib/validators';
+	import { mapActions } from 'pinia'; 
+	// import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
+	import Alert from '../../utilities/Alert.js';
+	import { userStore } from '../../store/user.store';
 
-import { mapActions } from 'pinia';
-import { userStore } from '../../store/user.store';
-import Alert from '../../utilities/Alert.js';
+    export default {
 
-export default {
+        data() {
 
-	data() {
+            return {
 
-		return {
+				errorMessage: '',
 
-			loading: false,
-			sentEmail: false,
-			message: '',
-			user: {
-				email: '',
-			},
+                user: {
+                    name: '',
+                    surname: '',
+                    email: '',
+                    password: '',
+                    confirmPassword: ''
+                }
 
-		}
+            }
 
-	},
+        },
 
-	// validations: {
+        // validations: {
+            
+        //     user: {
+                
+        //         name: { required },
+        //         surname: { required },
+        //         email: { required, email },
+        //         password: { required, minLength: minLength(6) },
+        //         confirmPassword: { required, sameAsPassword: sameAs('password') }
 
-	// 	user: {
+        //     }
 
-	// 		email: { required, email },
+        // },
 
-	// 	}
+        methods: {
 
-	// },
+			...mapActions(userStore, ['createUser']),
 
-	computed: {
+            async registerUser() {
 
-		buttonText() {
+                // this.$v.$touch()
+                // if (this.$v.$invalid) {
+                //     return;
+				// }
 
-			if (this.loading) {
-				return 'Sending email...';
-			} else {
-				return 'Send password reset email';
-			}
+				try {
 
-		}
+					this.errorMessage = '';
 
-	},
-
-	methods: {
-
-		...mapActions(userStore, ['passwordReset']),
-
-		resendEmail() {
-			this.user.email = '';
-			this.message = false;
-			this.sentEmail = false;
-		},
-
-		async submitPasswordReset() {
-
-			// this.$v.$touch()
-			// if (this.$v.$invalid) {
-			// 	return;
-			// }
-
-			this.loading = true;
-			
-			try {
-
-				let { message } = await this.passwordReset(this.user);
-
-				this.loading = false;
-				this.sentEmail = true;
-				this.message = message;
-
-			} catch (error) {
-
-				if (error.response.data.message) {
-
-					this.loading = false;
-
-					let message = error.response.data.message;
-
+					const { message } = await this.createUser(this.user);
+					
 					Alert.message({
-						icon: 'error',
-						title: 'Forgot Password', 
 						text: message,
-						confirmBtnText: 'Try again',
+						confirmBtnText: 'Login',
+						redirect: '/login',
 						confirmButton: true
 					});
 
+				} catch (error) {
+
+					if (error.response.data.message) {
+						this.errorMessage = error.response.data.message;
+					}
+
 				}
 
-			}
+            }
 
-		}
+        }
 
-	}
+    }
 
-}
 </script>

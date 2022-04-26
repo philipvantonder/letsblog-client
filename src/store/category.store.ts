@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
-import CategoryService from '@/services/category';
+import CategoryService from '../services/category';
 
-export const commentStore = defineStore('commentStore', {
+export const categoryStore = defineStore('categoryStore', {
 
 	state: () => ({
 		category: '', // single blog post category
@@ -12,11 +12,16 @@ export const commentStore = defineStore('commentStore', {
 
 	getters: {
 
-		getCategory: state => state.category
-
+		
 	},
-
+	
 	actions: {
+		
+		getCategory() {
+
+			return this.category
+
+		}, 
 
 		async checkUniqueCategory (postDTO: any) {
 

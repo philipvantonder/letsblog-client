@@ -9,16 +9,16 @@
 
 			<ul class="navbar-nav pt-4">
 				<li class="nav-item hover-white" v-if="isLoggedIn">
-					<router-link tag="a" :to="{ name: 'add-post' }" @click.native="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> Create Post </router-link>
+					<router-link tag="a" :to="{ name: 'add-post' }" @click="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> Create Post </router-link>
 				</li>
 				<li class="nav-item hover-white" v-if="isLoggedIn">
-					<router-link tag="a" :to="{ name: 'post-list' }" @click.native="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> My Posts </router-link>
+					<router-link tag="a" :to="{ name: 'post-list' }" @click="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> My Posts </router-link>
 				</li>
 				<li class="nav-item hover-white" v-if="isLoggedIn && isAdmin">
-					<router-link tag="a" :to="{ name: 'categories' }" @click.native="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> Categories </router-link>
+					<router-link tag="a" :to="{ name: 'categories' }" @click="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> Categories </router-link>
 				</li>
 				<li class="nav-item hover-white" v-if="isLoggedIn && isModerator">
-					<router-link tag="a" :to="{ name: 'review-posts' }" @click.native="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> Review  Posts</router-link>
+					<router-link tag="a" :to="{ name: 'review-posts' }" @click="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> Review  Posts</router-link>
 				</li>
 			</ul>
 		</div>
@@ -27,7 +27,10 @@
 
 <script>
 
-import { mapGetters, mapActions } from 'vuex';
+import { mapActions } from 'pinia';
+
+import { userStore } from '../../store/user.store';
+import { userRolesStore } from '../../store/userRoles.store';
 
 export default {
 
@@ -62,7 +65,8 @@ export default {
 
 	methods: {
 
-		...mapActions('UserRoles', ['getUserRoles']),
+		...mapActions(userStore, ['isLoggedIn']),
+		...mapActions(userRolesStore, ['getUserRoles']),
 
 		toggleSideBarStatus() {
 			this.$emit('toggleNavbarStatus', this.isOpen = !this.isOpen);
@@ -71,8 +75,7 @@ export default {
 	},
 
 	computed: {
-		...mapGetters('User', ['isLoggedIn']),
-		...mapGetters('UserRoles', ['isAdmin', 'isModerator']),
+		...mapActions(userRolesStore, ['isAdmin', 'isModerator']),
 	},
 
 	created() {

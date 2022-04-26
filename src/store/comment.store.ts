@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import CommentService from '@/services/comment';
+import CommentService from '../services/comment';
 
 export const commentStore = defineStore('commentStore', {
 

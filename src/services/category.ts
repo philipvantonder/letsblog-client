@@ -1,4 +1,4 @@
-import { getAxiosInstance } from '@/services/axios/index';
+import { getAxiosInstance } from './axios/index';
 
 export default {
 	

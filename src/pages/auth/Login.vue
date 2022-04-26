@@ -2,7 +2,7 @@
     <div class="container">
 		<div class="row">
 			<div class="col-md-12 col-lg-4 mx-auto">
-				<div class="mx-auto shadow p-3 mt-5 radius-10 bg-white">
+				<div class="mx-auto rounded shadow-lg p-3 mt-5">
 					<div class="d-flex justify-content-center">
 						<h2> Lets Blog </h2>
 					</div>
@@ -86,9 +86,7 @@ export default {
 
 				await this.login(this.user);
 
-				// await this.login(this.user);
-				
-				// this.$router.push({ name: 'feed' });
+				this.$router.push({ name: 'feed' });
 
 			} catch (error) {
 

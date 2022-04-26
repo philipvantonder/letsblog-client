@@ -8,13 +8,11 @@ export const userStore = defineStore('userStore', {
 		user: ''
 	}),
 
-	getters: {
-		isLoggedIn(state) {
-			return !!state.token
-		} 
-	},
-
 	actions: {
+
+		isLoggedIn() {
+			return !!this.token
+		},
 
 		async login(userDTO: any) {
 

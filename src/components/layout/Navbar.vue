@@ -40,7 +40,7 @@
 
 				<div v-if="isLoggedIn" class="d-flex align-items-center">
 					<div class="cursor-pointer" id="navbarDropdown" data-toggle="dropdown">
-						<img class="rounded-circle h-10 w-10 obj-fit profile-border" :src="api_url + '/api/users/image/' + user.id + '/' + user.profileImage" />
+						<!-- <img class="rounded-circle h-10 w-10 obj-fit profile-border" :src="api_url + '/api/users/image/' + user.id + '/' + user.profileImage" /> -->
 					</div>
 
 					<li class="nav-item dropdown">
@@ -61,46 +61,39 @@
 
 <script>
 
-import { mapGetters, mapActions, mapState } from 'vuex';
-import { api_url } from '@/utilities/config/index';
+import { mapActions, mapState } from 'pinia';
+
+import { userStore } from '../../store/user.store';
+import { categoryStore } from '../../store/category.store';
+
+import { api_url } from '../../utilities/config/index';
 
 export default {
 
 	props: {
-
 		navBarStatus: {
-
 			type: Boolean,
 			required: true
-
 		}
-
 	},
 
 	data () {
-
 		return  {
-			
 			showModal: false,
 			isOpen: false,
 			api_url
-
 		}
-
 	},
 
 	watch: {
-
 		navBarStatus: function(status) {
 			this.isOpen = status;
 		}
-
 	},
 
 	methods: {
-
-		...mapActions('User', ['setUser', 'logout']),
-		...mapActions('Category', ['setCategories']),
+		...mapActions(userStore, ['setUser', 'logout', 'isLoggedIn']),
+		...mapActions(categoryStore, ['setCategories']),
 
 		logoutUser() {
 
@@ -123,9 +116,8 @@ export default {
 	},
 
 	computed: {
-		...mapGetters('User', ['isLoggedIn']),
-		...mapState('User', ['user']),
-		...mapState('Category', ['categories']),
+		...mapState(userStore, ['user']),
+		...mapState(categoryStore, ['categories']),
 	},
 
 	async created() {
@@ -134,18 +126,18 @@ export default {
 
 		await this.setUser();
 
-		const handleEscape = (e) => {
-			if (e.key === 'Esc' || e.key === 'Escape') {
-				this.isOpen = false;
-				this.$emit('toggle-sidebar', this.isOpen);
-			}
-		};
+		// const handleEscape = (e) => {
+		// 	if (e.key === 'Esc' || e.key === 'Escape') {
+		// 		this.isOpen = false;
+		// 		this.$emit('toggle-sidebar', this.isOpen);
+		// 	}
+		// };
 
-		document.addEventListener('keydown', handleEscape);
+		// document.addEventListener('keydown', handleEscape);
 
-		this.$once('hook:beforeDestroy', () => {
-			document.removeEventListener('keydown', handleEscape);
-		});
+		// this.$once('hook:beforeDestroy', () => {
+		// 	document.removeEventListener('keydown', handleEscape);
+		// });
 
 	}
 
