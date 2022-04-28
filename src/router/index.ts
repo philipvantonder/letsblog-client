@@ -138,6 +138,8 @@ const router = createRouter({
 
 	history: createWebHistory(),
 
+	linkActiveClass: 'fw-bolder',
+
 	routes
 
 });

@@ -1,36 +1,27 @@
 <template>
-	<div v-if="!loading" class="container">
-		<div class="row pt-4">
-			<div class="col-lg-12">
-				<div v-if="blogPosts.length" class="card-deck">
-					<div class="col-xs-12 col-sm-6 col-lg-4 mb-4" v-for="post in blogPosts" :key="post.id">
-						<router-link :to="{ name: 'blog-post', params: { 'id': post.slug } }" tag="div" class="card w-100 shadow border-0">
-							<img class="card-img-top card-height" :src="api_url + '/api/posts/image/' + post.id" alt="Card image cap">
+	<div class="container">
+		<div class="row mb-3">
+			<div class="col-xs-12 col-sm-6 col-lg-4 cards d-flex" v-for="post in blogPosts" :key="post.id">
+				<router-link :to="{ name: 'blog-post', params: { 'id': post.slug } }" class="card w-100 shadow-lg border-0 mt-4" >
+					<img class="card-img-top card-height" :src="api_url + '/api/posts/image/' + post.id" alt="Card image cap">
+					<div class="card-body d-flex flex-column justify-content-between">
+						<h5 class="card-title" title="View post"> {{ post.title }} </h5>
 
-							<div class="card-body d-flex flex-column justify-content-between">
-								<h5 class="card-title" title="View post"> {{ post.title }} </h5>
+						<p class="card-text" v-html="LimitText(post.body, 80)"> </p>
 
-								<p class="card-text" v-html="LimitText(post.body, 80)"> </p>
-
-								<div class="d-flex align-items-center">
-									<div>
-										<!-- <img class="rounded-circle h-10 w-10 obj-fit" :src="api_url + '/api/users/image/' + post.authorId + '/' + post.authorPicture" /> -->
-									</div>
-									<div class="d-flex flex-column ml-2">
-										<div>
-											{{ post.author }} <br>
-											{{ post.datePublished }}
-										</div>
-									</div>
-								</div>
-
+						<div class="d-flex align-items-center">
+							<div>
+								<img class="rounded-circle h-10 w-10 obj-fit" :src="api_url + '/api/users/image/' + post.authorId + '/' + post.authorPicture" />
 							</div>
-						</router-link>
+							<div class="d-flex flex-column ms-2">
+								<div>
+									{{ post.author }} <br>
+									{{ post.datePublished }}
+								</div>
+							</div>
+						</div>
 					</div>
-				</div>
-				<div v-else>
-					There is currently no posts loaded.
-				</div>
+				</router-link>
 			</div>
 		</div>
 	</div>
@@ -88,6 +79,11 @@ export default {
 .card:hover {
 	transform: translate(0, -5px);
 	cursor: pointer;
+}
+
+.cards a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
 }
 
 </style>

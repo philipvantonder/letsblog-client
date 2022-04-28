@@ -2,7 +2,7 @@
     <div class="container">
 		<div class="row">
 			<div class="col-md-12 col-lg-4 mx-auto">
-				<div class="mx-auto rounded shadow-lg p-3 mt-5">
+				<div class="mx-auto rounded shadow-lg p-3 mt-5 bg-white">
 					<div class="d-flex justify-content-center">
 						<h2> Lets Blog </h2>
 					</div>
