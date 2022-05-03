@@ -37,7 +37,7 @@
 				<div class="row">
 					<div class="col-lg-6">
 						<div v-if="showComment" class="mt-3">
-							<AddComment @hideCommentBox="hideCommentBox()" :postId="blogPosts.id" />
+							<AddComment @hideCommentBox="hideCommentBox()" :postId="blogPosts.id" :userId="user.id"  />
 						</div>
 					</div>
 				</div>
@@ -103,7 +103,7 @@
 
 			showCommentBox() {
 
-				if (!this.isLoggedIn) {
+				if (!this.isLoggedIn()) {
 
 					Alert.message({
 						icon: 'error',

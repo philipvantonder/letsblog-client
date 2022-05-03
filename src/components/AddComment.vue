@@ -32,6 +32,11 @@ export default {
 			required: true
 		},
 
+		userId: {
+			type: String,
+			required: true
+		},
+
 	},
 
 	data() {
@@ -40,8 +45,9 @@ export default {
 
 			formData: {
 				comment: '',
+				userId: this.userId,
 				postId: this.postId
-			}
+			},
 
 		}
 

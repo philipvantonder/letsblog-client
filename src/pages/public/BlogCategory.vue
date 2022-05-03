@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="row pt-4">
-			<!-- <div v-if="linkedCategoryPosts.length" class="card-deck"> -->
+			<template v-if="linkedCategoryPosts.length">
 				<div class="col-xs-12 col-sm-6 col-lg-4 post-cards d-flex" v-for="post in linkedCategoryPosts" :key="post._id">
 					<router-link :to="{ name: 'blog-post', params: { 'id': post.slug } }" class="card w-100 shadow border-0 mt-4">
 						<img class="card-img-top card-height" :src="api_url + '/api/posts/image/' + post._id" alt="Card image cap">
@@ -13,10 +13,10 @@
 						</div>
 					</router-link>
 				</div>
-			<!-- </div> -->
-			<!-- <div v-else> -->
-				<!-- There is currently no linked posts. -->
-			<!-- </div> -->
+			</template>
+			<template v-else>
+				There is currently no linked posts.
+			</template>
 		</div>
 	</div>
 </template>
