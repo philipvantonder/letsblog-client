@@ -1,7 +1,7 @@
 <template>
 	<nav class="navbar navbar-expand-lg navbar-light bg-primary d-flex justify-content-between">
 		<div class="d-flex align-items-center ms-3">
-			<a v-if="isLoggedIn" href="javascript:void(0)" @click="$emit('toggle-sidebar', isOpen = !isOpen)">
+			<a v-if="isLoggedIn()" href="javascript:void(0)" @click="$emit('toggle-sidebar', isOpen = !isOpen)">
 				<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="w-6 h-6" >
 					<g>
 						<path id="menu-bar" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" ></path>
@@ -11,7 +11,7 @@
 			
 			<button v-if="isOpen" @click="$emit('toggle-sidebar', isOpen = !isOpen)" tabindex="-1" class="position-fixed border-0 bg-black inset-0 opacity-50 h-100 w-100 cursor-default z-10"></button>
 
-			<router-link to="/" tag="a" :class="{ 'ml-2': isLoggedIn }" class="navbar-brand text-white" exact> Lets Blog </router-link>
+			<router-link to="/" tag="a" :class="{ 'ms-2': isLoggedIn() }" class="navbar-brand text-white" exact> Lets Blog </router-link>
 		</div>
 		
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

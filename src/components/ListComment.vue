@@ -26,11 +26,11 @@
 						</div>
 						<div>
 							<span>
-								<!-- <font-awesome-layers v-tooltip:top="'Like Post'" full-width class="fa-fw fa-1x py-1 cursor-pointer comment-icon" :class="commentLiked" @click="submitLike(true, comment.commentId)"> <font-awesome-icon icon="thumbs-up" /> </font-awesome-layers>	 -->
+								<font-awesome-layers data-bs-toggle="tooltip" data-bs-placement="top" title="Like Post" full-width class="fa-fw fa-1x py-1 cursor-pointer comment-icon" :class="commentLiked" @click="submitLike(true, comment.commentId)"> <font-awesome-icon icon="thumbs-up" /> </font-awesome-layers>	
 								({{ comment.commentLike }})
 							</span>
 							<span>
-								<!-- <font-awesome-layers v-tooltip:top="'Dislike Post'" full-width class="fa-fw fa-1x py-1 cursor-pointer comment-icon" :class="commentDisliked" @click="submitLike(false, comment.commentId)"> <font-awesome-icon icon="thumbs-down" /> </font-awesome-layers> -->
+								<font-awesome-layers data-bs-toggle="tooltip" data-bs-placement="top" title="Dislike Post" full-width class="fa-fw fa-1x py-1 cursor-pointer comment-icon" :class="commentDisliked" @click="submitLike(false, comment.commentId)"> <font-awesome-icon icon="thumbs-down" /> </font-awesome-layers>
 								({{ comment.commentDislike }})
 							</span>
 						</div>

@@ -1,3 +1,11 @@
+:root {
+	--prim-theme-color: #18799a;
+}
+
+#menu-bar {
+	fill: #FFF;
+}
+
 body {
 	background-color: #eff3f9 !important;
 }
@@ -25,6 +33,19 @@ body {
     width: 2.5rem;
 }
 
+.w-6 {
+	width: 1.5rem;;
+}
+
+.w-64 {
+	width: 16rem !important;
+}
+
+
+.h-6 {
+	height: 1.5rem;;
+}
+
 .z-10 {
     z-index: 10;
 }
@@ -39,4 +60,11 @@ body {
 .post-cards a {
 	color: inherit; /* blue colors for links too */
 	text-decoration: inherit; /* no underline */
-  }
+}
+
+.cursor-default {
+    cursor: default !important;
+}
+.cursor-pointer {
+    cursor: pointer !important;
+}

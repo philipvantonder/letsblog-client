@@ -3,6 +3,8 @@
 
 		<navbar @toggle-sidebar="updateSidebarStatus($event)" :navBarStatus="isOpen" />
 
+		<sidebar @toggleNavbarStatus="updateNavbarStatus($event)" v-if="isLoggedIn()" :sideBarStatus="isOpen" />
+
 		<div class="d-flex flex-grow-1 overflow-y-hidden">
 			<div class="d-flex flex-grow-1 overflow-auto feed-content">
 				<router-view :key="$route.fullPath"></router-view>
@@ -24,9 +26,7 @@
 		data() {
 
 			return {
-
 				isOpen: false,
-
 			}
 
 		},
@@ -42,6 +42,10 @@
 				this.isOpen = status;
 			}
 
+		},
+
+		created() {
+			console.log(this.isOpen);
 		}
 
 	}
