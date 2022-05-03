@@ -2,7 +2,7 @@
     <div class="container">
 		<div class="row">
 			<div class="col-md-12 col-lg-6 mx-auto">
-				<div class="rounded shadow-lg mt-5 p-3">
+				<div class="rounded shadow-lg mt-5 p-3 bg-white">
 					<div class="d-flex justify-content-center">
 						<h2> Create your account </h2>
 					</div>

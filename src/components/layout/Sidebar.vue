@@ -64,7 +64,6 @@ export default {
 	},
 
 	methods: {
-
 		...mapActions(userStore, ['isLoggedIn']),
 		...mapActions(userRolesStore, ['getUserRoles']),
 

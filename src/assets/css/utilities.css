@@ -25,3 +25,18 @@ body {
     width: 2.5rem;
 }
 
+.z-10 {
+    z-index: 10;
+}
+
+.inset-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.post-cards a {
+	color: inherit; /* blue colors for links too */
+	text-decoration: inherit; /* no underline */
+  }

@@ -1,14 +1,12 @@
 <template>
 	<div>
-		<div class="modal fade show d-block"  tabindex="-1" role="dialog" >
+		<div class="modal show d-block"  tabindex="-1" role="dialog" >
 			<div class="modal-dialog modal-lg z-10" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<slot name="header"></slot>
 
-						<button type="button" class="close" @click="close()">
-							<span aria-hidden="true">&times;</span>
-						</button>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div :class="'modal-body ' + bodyClass">
 						<slot name="content"></slot>
@@ -76,26 +74,7 @@ export default {
 
 		document.addEventListener('keydown', handleEscape);
 
-		this.$once('hook:beforeDestroy', () => {
-			document.removeEventListener('keydown', handleEscape);
-		});
-
 	}
 
 }
 </script>
-
-<style scoped>
-
-.modal-body::-webkit-scrollbar {
-	width: 12px;
-	background-color: #fff;
-}
-
-.modal-body::-webkit-scrollbar-thumb {
-	width: 12px;
-	background-color: #95999c;
-	border-radius: 50rem;
-}
-
-</style>

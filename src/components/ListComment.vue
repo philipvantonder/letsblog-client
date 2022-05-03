@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<div class="shadow radius-10 bg-white p-3 mt-2">
+		<div class="rounded shadow-lg bg-white p-3 mt-2">
 			<div class="d-flex justify-content-between">
 				<div class="d-flex align-items-center">
-					<img class="rounded-circle h-10 w-10 obj-fit" :src="api_url + '/api/users/image/' + comment.userId + '/' + comment.userProfileImage" />
+					<img class="rounded-circle" :src="api_url + '/api/users/image/' + comment.userId + '/' + comment.userProfileImage" width="60" height="60" />
 
 					<div class="d-flex flex-column">
-						<div class="ml-3">
+						<div class="ms-3">
 							<div>
 								<h4 class="mb-1"> {{ comment.userName }} {{ comment.userSurname }} </h4>
 							</div>
@@ -26,11 +26,11 @@
 						</div>
 						<div>
 							<span>
-								<font-awesome-layers v-tooltip:top="'Like Post'" full-width class="fa-fw fa-1x py-1 cursor-pointer comment-icon" :class="commentLiked" @click="submitLike(true, comment.commentId)"> <font-awesome-icon icon="thumbs-up" /> </font-awesome-layers>	
+								<!-- <font-awesome-layers v-tooltip:top="'Like Post'" full-width class="fa-fw fa-1x py-1 cursor-pointer comment-icon" :class="commentLiked" @click="submitLike(true, comment.commentId)"> <font-awesome-icon icon="thumbs-up" /> </font-awesome-layers>	 -->
 								({{ comment.commentLike }})
 							</span>
 							<span>
-								<font-awesome-layers v-tooltip:top="'Dislike Post'" full-width class="fa-fw fa-1x py-1 cursor-pointer comment-icon" :class="commentDisliked" @click="submitLike(false, comment.commentId)"> <font-awesome-icon icon="thumbs-down" /> </font-awesome-layers>
+								<!-- <font-awesome-layers v-tooltip:top="'Dislike Post'" full-width class="fa-fw fa-1x py-1 cursor-pointer comment-icon" :class="commentDisliked" @click="submitLike(false, comment.commentId)"> <font-awesome-icon icon="thumbs-down" /> </font-awesome-layers> -->
 								({{ comment.commentDislike }})
 							</span>
 						</div>
@@ -51,15 +51,15 @@
 			</template>
 
 			<template #content>
-				<textarea class="form-control" rows="4" placeholder="What is on your mind?" v-model="formData.comment" :class="{ 'is-invalid': $v.formData.comment.$error }"></textarea>
-				<div v-if="$v.formData.comment.$error" class="invalid-feedback">
+				<textarea class="form-control" rows="4" placeholder="What is on your mind?" v-model="formData.comment" ></textarea>
+				<!-- <div v-if="$v.formData.comment.$error" class="invalid-feedback">
 					<span v-if="!$v.formData.comment.required"> Enter a comment </span>
-				</div>
+				</div> -->
 			</template>
 			
 			<template #footer>
-				<button class="btn btn-success" @click="submitReply()"> Reply </button>
-				<button class="btn btn-secondary ml-1" @click="modalIsOpen = !modalIsOpen"> Close </button>
+				<button class="btn btn-primary" @click="submitReply()"> Reply </button>
+				<button class="btn btn-secondary ms-1" @click="modalIsOpen = !modalIsOpen"> Close </button>
 			</template>
 		</Modal>
 	</div>
@@ -67,12 +67,17 @@
 
 <script>
 
-	import Modal from '@/components/Modal';
-	import { required } from 'vuelidate/lib/validators';
-	import { mapActions, mapGetters, mapState } from 'vuex';
+	// import { required } from 'vuelidate/lib/validators';
+	import Modal from './Modal.vue';
+
+	import { commentStore } from '../store/comment.store';
+	import { userStore } from '../store/user.store';
+
+	import { mapActions, mapState } from 'pinia';
+	
 	import _debounce from 'lodash.debounce';
-	import Alert from '@/utilities/Alert';
-	import { api_url } from '@/utilities/config/index';
+	import Alert from '../utilities/Alert';
+	import { api_url } from '../utilities/config/index';
 	
 	export default {
 
@@ -122,8 +127,7 @@
 		},
 
 		computed: {
-			...mapGetters('User', ['isLoggedIn']),
-			...mapState('Comment', ['userCommentLikes']),
+			...mapState(commentStore, ['userCommentLikes']),
 
 			commentLiked() {
 				return (this.commentLike === true ? 'like-active' : '');
@@ -135,6 +139,7 @@
 		},
 
 		methods: {
+			...mapActions(userStore, ['isLoggedIn']),
 
 			userLikedComment(commentId) {
 				
@@ -154,7 +159,7 @@
 
 			},
 
-			...mapActions('Comment', ['addReply', 'addLike', 'setPostCommentsById', 'getUserCommentLikes']),
+			...mapActions(commentStore, ['addReply', 'addLike', 'setPostCommentsById', 'getUserCommentLikes']),
 
 			showReplyPopup(commentId, userId, postId) {
 
@@ -188,10 +193,10 @@
 
 			async submitReply() {
 
-				this.$v.$touch();
-				if (this.$v.$invalid) {
-					return true;
-				}
+				// this.$v.$touch();
+				// if (this.$v.$invalid) {
+				// 	return true;
+				// }
 
 				await this.addReply(this.formData);
 				await this.resetForm();
@@ -239,11 +244,11 @@
 
 		},
 
-		validations: {
-			formData: {
-				comment: { required }
-			},
-		},
+		// validations: {
+		// 	formData: {
+		// 		comment: { required }
+		// 	},
+		// },
 
 		mounted () {
 			

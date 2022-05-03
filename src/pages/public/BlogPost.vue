@@ -28,7 +28,7 @@
 				</div>
 
 				<div class="mt-3">
-					<button v-if="!showComment" class="btn btn-dark" @click="showCommentBox()"> Comment </button>
+					<button v-if="!showComment" class="btn btn-primary" @click="showCommentBox()"> Comment </button>
 				</div>
 					
 			</div>
@@ -37,7 +37,7 @@
 				<div class="row">
 					<div class="col-lg-6">
 						<div v-if="showComment" class="mt-3">
-							<!-- <AddComment @hideCommentBox="hideCommentBox()" :postId="blogPosts.id" :userId="user.id" /> -->
+							<AddComment @hideCommentBox="hideCommentBox()" :postId="blogPosts.id" />
 						</div>
 					</div>
 				</div>
@@ -50,7 +50,7 @@
 
 							<div> <strong> Comments ({{ totalComments }}) </strong> </div>
 							
-							<!-- <ListComment v-for="(comment, index) in postComments" :key="index" :comment="comment" :blogPostId="blogPosts.id" @update-blog-post="updateBlogPost()" /> -->
+							<ListComment v-for="(comment, index) in postComments" :key="index" :comment="comment" :blogPostId="blogPosts.id" @update-blog-post="updateBlogPost()" />
 						</div>
 					</div>
 				</div>
@@ -68,8 +68,8 @@
 	import { userStore } from '../../store/user.store';
 	import { commentStore } from '../../store/comment.store';
 
-	// import AddComment from '../../components/AddComment';
-	// import ListComment from '../../components/ListComment';
+	import AddComment from '../../components/AddComment.vue';
+	import ListComment from '../../components/ListComment.vue';
 	import Alert from '../../utilities/Alert';
 	import { api_url } from '../../utilities/config/index';
 
@@ -78,31 +78,28 @@
 		data() {
 
 			return {
-
 				loading: true,
 				showComment: false,
 				api_url
-
 			}
 			
 		},
 
 		components: {
-			// AddComment,
-			// ListComment
+			AddComment,
+			ListComment
 		},
 
 		computed: {
 			...mapState(postStore, ['blogPosts']),
 			...mapState(userStore, ['user']),
 			...mapState(commentStore, ['postComments', 'totalComments']),
-			// ...mapGetters(userStore, ['isLoggedIn']),
 		},
 
 		methods: {
+			...mapActions(userStore, ['isLoggedIn']),
 			...mapActions(postStore, ['setBlogPostBySlug']),
 			...mapActions(commentStore, ['setPostCommentsById', 'getUserCommentLikes']),
-			...mapActions(userStore, ['isLoggedIn']),
 
 			showCommentBox() {
 
@@ -141,7 +138,7 @@
 
 			await this.setPostCommentsById(this.blogPosts.id);
 
-			if (this.isLoggedIn) {
+			if (this.isLoggedIn()) {
 				await this.getUserCommentLikes();
 			}
 

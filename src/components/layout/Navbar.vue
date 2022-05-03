@@ -17,8 +17,36 @@
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
+		
+		<div>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li v-for="(category, index) in categories" :key="index" class="nav-item dropdown">
+						<router-link v-if="category.subcategory.length === 0" class="nav-link text-white" :to="{ name: 'blog-category', params: { 'id': category.category.slug } }" >
+							{{ category.category.name }} 
+						</router-link>
 
-		<div class="collapse navbar-collapse flex-grow-0" id="navbarNavAltMarkup">
+						<a v-if="category.subcategory.length > 0 " class="nav-link dropdown-toggle text-white" id="subCategories" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+							{{ category.category.name }} 
+						</a>
+						<ul v-if="category.subcategory.length > 0" class="dropdown-menu" aria-labelledby="subCategories">
+							<li>
+								<router-link class="dropdown-item" :to="{ name: 'blog-category', params: { 'id': subcategoryItem.slug } }" v-for="subcategoryItem in category.subcategory" :key="subcategoryItem._id">
+									{{ subcategoryItem.name }}
+								</router-link>
+							</li>
+						</ul>
+					</li>
+
+					<li class="nav-item dropdown">
+						<router-link :to="{ name: 'login' }" class="nav-link text-white"> Sign In </router-link>
+					</li>
+				
+				</ul>
+			</div>
+		</div>
+
+		<!-- <div class="collapse navbar-collapse flex-grow-0" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
 				<div v-for="(category, index) in categories" :key="index" class="dropdown">
 					<router-link v-if="category.subcategory.length === 0" class="nav-link dropdown-toggle text-white" tag="a" data-bs-toggle="dropdown" :to="{ name: 'blog-category', params: { 'id': category.category.slug } }" >
@@ -39,9 +67,9 @@
 				<router-link :to="{ name: 'login' }" class="nav-link text-white"> Sign In </router-link>
 
 				<div v-if="isLoggedIn" class="d-flex align-items-center">
-					<!-- <div class="cursor-pointer" id="navbarDropdown" data-toggle="dropdown">
+					 <div class="cursor-pointer" id="navbarDropdown" data-toggle="dropdown">
 						<img class="rounded-circle h-10 w-10 obj-fit profile-border" :src="api_url + '/api/users/image/' + user.id + '/' + user.profileImage" />
-					</div> -->
+					</div> 
 
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle text-white" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,7 +83,8 @@
 					</li>
 				</div>
 			</div>
-		</div>
+		</div> -->
+
 	</nav>
 </template>
 

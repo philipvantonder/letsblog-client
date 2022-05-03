@@ -1,24 +1,22 @@
 <template>
 	<div class="container">
 		<div class="row pt-4">
-			<div class="col-lg-12">
-				<div v-if="linkedCategoryPosts.length" class="card-deck">
-					<div class="col-xs-12 col-sm-6 col-lg-4 mb-4 d-flex" v-for="post in linkedCategoryPosts" :key="post._id">
-						<router-link :to="{ name: 'blog-post', params: { 'id': post.slug } }" tag="div" class="card w-100 shadow border-0">
-							<img class="card-img-top card-height" :src="api_url + '/api/posts/image/' + post._id" alt="Card image cap">
+			<!-- <div v-if="linkedCategoryPosts.length" class="card-deck"> -->
+				<div class="col-xs-12 col-sm-6 col-lg-4 post-cards d-flex" v-for="post in linkedCategoryPosts" :key="post._id">
+					<router-link :to="{ name: 'blog-post', params: { 'id': post.slug } }" class="card w-100 shadow border-0 mt-4">
+						<img class="card-img-top card-height" :src="api_url + '/api/posts/image/' + post._id" alt="Card image cap">
 
-							<div class="card-body">
-								<h5 class="card-title" title="View post"> {{ post.title }} </h5>
+						<div class="card-body">
+							<h5 class="card-title" title="View post"> {{ post.title }} </h5>
 
-								<p class="card-text" v-html="LimitText(post.body, 80)"> </p>
-							</div>
-						</router-link>
-					</div>
+							<p class="card-text" v-html="LimitText(post.body, 80)"> </p>
+						</div>
+					</router-link>
 				</div>
-				<div v-else>
-					There is currently no linked posts.
-				</div>
-			</div>
+			<!-- </div> -->
+			<!-- <div v-else> -->
+				<!-- There is currently no linked posts. -->
+			<!-- </div> -->
 		</div>
 	</div>
 </template>
@@ -44,17 +42,13 @@ export default {
 	},
 
 	methods: {
-
 		LimitText,
 
 		...mapActions(categoryStore, ['setCategoryBySlug'])
-
 	},
 
 	computed: {
-
 		...mapState(categoryStore, ['linkedCategoryPosts'])
-
 	},
 
 	created() {

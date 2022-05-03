@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="row mb-3">
-			<div class="col-xs-12 col-sm-6 col-lg-4 cards d-flex" v-for="post in blogPosts" :key="post.id">
+			<div class="col-xs-12 col-sm-6 col-lg-4 post-cards d-flex" v-for="post in blogPosts" :key="post.id">
 				<router-link :to="{ name: 'blog-post', params: { 'id': post.slug } }" class="card w-100 shadow-lg border-0 mt-4" >
 					<img class="card-img-top card-height" :src="api_url + '/api/posts/image/' + post.id" alt="Card image cap">
 					<div class="card-body d-flex flex-column justify-content-between">
@@ -11,7 +11,7 @@
 
 						<div class="d-flex align-items-center">
 							<div>
-								<img class="rounded-circle h-10 w-10 obj-fit" :src="api_url + '/api/users/image/' + post.authorId + '/' + post.authorPicture" />
+								<img class="rounded-circle" width="60" height="60" :src="api_url + '/api/users/image/' + post.authorId + '/' + post.authorPicture" />
 							</div>
 							<div class="d-flex flex-column ms-2">
 								<div>
@@ -79,11 +79,6 @@ export default {
 .card:hover {
 	transform: translate(0, -5px);
 	cursor: pointer;
-}
-
-.cards a {
-  color: inherit; /* blue colors for links too */
-  text-decoration: inherit; /* no underline */
 }
 
 </style>
