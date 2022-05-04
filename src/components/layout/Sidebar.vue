@@ -1,7 +1,7 @@
 <template>
 	<transition name="slide">
-		<div class="w-64 bg-primary z-15 overflow-auto vh-100 position-fixed">
-			<div class="d-flex align-items-center pl-2rem pt-4">
+		<div v-if="isOpen" class="w-64 bg-primary z-15 overflow-auto vh-100 position-fixed">
+			<div class="d-flex align-items-center ms-4 pt-4">
 				<a v-if="isLoggedIn()" href="javascript:void(0)" @click="toggleSideBarStatus()" class="z-15">
 					<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="fill-current w-6 h-6"><path id="menu-bar" d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>
 				</a>
@@ -9,16 +9,16 @@
 
 			<ul class="navbar-nav pt-4">
 				<li class="nav-item hover-white" v-if="isLoggedIn()">
-					<router-link tag="a" :to="{ name: 'add-post' }" @click="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> Create Post </router-link>
+					<router-link tag="a" :to="{ name: 'add-post' }" @click="toggleSideBarStatus()" class="nav-link text-white ms-4"> Create Post </router-link>
 				</li>
 				<li class="nav-item hover-white" v-if="isLoggedIn()">
-					<router-link tag="a" :to="{ name: 'post-list' }" @click="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> My Posts </router-link>
+					<router-link tag="a" :to="{ name: 'post-list' }" @click="toggleSideBarStatus()" class="nav-link text-white ms-4"> My Posts </router-link>
 				</li>
 				<li class="nav-item hover-white" v-if="isLoggedIn() && isAdmin">
-					<router-link tag="a" :to="{ name: 'categories' }" @click="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> Categories </router-link>
+					<router-link tag="a" :to="{ name: 'categories' }" @click="toggleSideBarStatus()" class="nav-link text-white ms-4"> Categories </router-link>
 				</li>
 				<li class="nav-item hover-white" v-if="isLoggedIn() && isModerator">
-					<router-link tag="a" :to="{ name: 'review-posts' }" @click="toggleSideBarStatus()" class="nav-link text-white pl-2rem"> Review  Posts</router-link>
+					<router-link tag="a" :to="{ name: 'review-posts' }" @click="toggleSideBarStatus()" class="nav-link text-white ms-4"> Review  Posts</router-link>
 				</li>
 			</ul>
 		</div>

@@ -23,7 +23,8 @@
     "sass-loader": "^12.6.0",
     "vue": "^3.2.25",
     "vue-router": "^4.0.14",
-    "vue-sweetalert2": "^5.0.2"
+    "vue-sweetalert2": "^5.0.2",
+    "vue2-editor": "^2.10.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",

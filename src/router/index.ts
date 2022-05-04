@@ -9,6 +9,8 @@ import BlogFeed from '../pages/public/BlogFeed.vue';
 import BlogPost from '../pages/public/BlogPost.vue';
 import BlogCategory from '../pages/public/BlogCategory.vue';
 
+import { lazyLoad } from '../utilities/functions';
+
 const routes: Array<RouteRecordRaw> = [
 	{
 		name: 'login',
@@ -55,8 +57,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		name: 'profile',
 		path: '/profile',
-		component: LoginPage,
-		// component: lazyLoad('pages/profile/index'),
+		component: lazyLoad('pages/profile/index'),
 		meta: {
 			requiresAuth: true
 		}
@@ -65,8 +66,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		name: 'edit-profile',
 		path: '/edit-profile',
-		component: LoginPage,
-		// component: lazyLoad('pages/profile/EditProfile'),
+		component: lazyLoad('pages/profile/EditProfile'),
 		meta: {
 			requiresAuth: true
 		}
@@ -75,8 +75,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		name: 'categories',
 		path: '/categories',
-		component: LoginPage,
-		// component: lazyLoad('pages/category/index'),
+		component: lazyLoad('pages/category/index'),
 		meta: {
 			requiresAuthAndIsAdmin: true
 		}
@@ -85,8 +84,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		name: 'add-post',
 		path: '/add-post',
-		component: LoginPage,
-		// component: lazyLoad('pages/post/Add'),
+		component: lazyLoad('pages/post/Add'),
 		meta: {
 			requiresAuth: true
 		}
@@ -95,8 +93,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		name: 'edit-post',
 		path: '/edit-post/:id',
-		component: LoginPage,
-		// component: lazyLoad('pages/post/Edit'),
+		component: lazyLoad('pages/post/Edit'),
 		meta: {
 			requiresAuth: true
 		}
@@ -105,8 +102,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		name: 'post-list',
 		path: '/post-list',
-		component: LoginPage,
-		// component: lazyLoad('pages/post/List'),
+		component: lazyLoad('pages/post/List'),
 		meta: {
 			requiresAuth: true
 		}
@@ -115,8 +111,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		name: 'review-posts',
 		path: '/review-posts',
-		component: LoginPage,
-		// component: lazyLoad('pages/reviewPosts/index'),
+		component: lazyLoad('pages/reviewPosts/index'),
 		meta: {
 			requiresAuth: true
 		}
@@ -125,8 +120,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		name: 'review-post',
 		path: '/review-post/:id',
-		component: LoginPage,
-		// component: lazyLoad('pages/reviewPosts/reviewPost'),
+		component: lazyLoad('pages/reviewPosts/reviewPost'),
 		meta: {
 			requiresAuth: true
 		}

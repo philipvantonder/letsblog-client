@@ -17,7 +17,7 @@
 					</div>
 
 					<div class="d-flex justify-content-center">
-						<img class="rounded-circle obj-fit h-20 w-20" :src="api_url + '/api/users/image/' + user.id + '/' + user.profileImage" />
+						<img class="rounded-circle" width="80" height="80" :src="api_url + '/api/users/image/' + user.id + '/' + user.profileImage" />
 					</div>
 
 					<div v-show="changeProfilePicture" class="mt-3">
@@ -39,37 +39,35 @@
 			<div class="col-lg-8">
 				<div class="shadow rounded bg-white d-flex flex-column p-5">
 					<form @submit.prevent="submitForm()"> 
-
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="name" class="font-weight-bolder"> Name </label>
 							<input type="text" class="form-control" v-model="user.name" placeholder="Name">
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="name" class="font-weight-bolder"> Surname </label>
 							<input type="text" class="form-control" v-model="user.surname" placeholder="Surname">
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="name" class="font-weight-bolder"> Email </label>
 							<input type="text" class="form-control" v-model="user.email" placeholder="Email">
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="name" class="font-weight-bolder"> Cell number </label>
 							<input type="text" class="form-control" v-model="user.cellnumber" placeholder="Cell number">
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<label for="name" class="font-weight-bolder"> Bio </label>
 							<textarea class="form-control" v-model="user.bio" placeholder="Bio" rows="3"> </textarea>
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<button class="btn btn-outline-primary"> Update </button>
-							<router-link class="btn btn-outline-secondary ml-1 float-right" tag="a" :to="{ name: 'profile' }"> Back </router-link>
+							<router-link class="btn btn-outline-secondary ms-1 float-right" tag="a" :to="{ name: 'profile' }"> Back </router-link>
 						</div>
-
 					</form>
 				</div>
 			</div>

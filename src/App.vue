@@ -44,10 +44,6 @@
 
 		},
 
-		created() {
-			console.log(this.isOpen);
-		}
-
 	}
 </script>
 

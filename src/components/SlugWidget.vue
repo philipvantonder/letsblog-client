@@ -25,7 +25,9 @@
 <script>
 
 import _debounce from 'lodash.debounce';
-import { mapActions } from 'vuex';
+import { mapActions } from 'pinia';
+
+import { postStore } from '../store/post.store';
 
 export default {
 
@@ -81,7 +83,7 @@ export default {
 
 	methods: {
 
-		...mapActions('Posts', ['checkUnique']),
+		...mapActions(postStore, ['checkUnique']),
 
 		editSlug() {
 

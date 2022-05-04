@@ -24,7 +24,7 @@
 						</div>
 
 						<div class="form-group">
-							<vue-editor v-model="post.body" ></vue-editor>
+							<!-- <vue-editor v-model="post.body" ></vue-editor> -->
 						</div>
 
 						<div class="form-group">
@@ -77,6 +77,9 @@
 	import TagInput from '../../components/TagInput.vue';
 	import { api_url } from '../../utilities/config/index';
 
+	import { postStore } from '../../store/post.store';
+	import { categoryStore } from '../../store/category.store';
+
     export default {
 
         data() {
@@ -107,15 +110,15 @@
 
         methods: {
 
-			...mapActions('Posts', ['createPost']),
-			...mapActions('Category', ['setCategories']),
+			...mapActions(postStore, ['createPost']),
+			...mapActions(categoryStore, ['setCategories']),
 
 			async saveAsDraft() {
 
-				this.$v.$touch();
-				if (this.$v.$invalid || this.fileError) {
-					return;
-				}
+				// this.$v.$touch();
+				// if (this.$v.$invalid || this.fileError) {
+				// 	return;
+				// }
 
 				this.submitPost();
 
@@ -193,7 +196,7 @@
 		
 		computed: {
 
-			...mapState('Category', ['categories'])
+			...mapState(categoryStore, ['categories'])
 
 		},
 

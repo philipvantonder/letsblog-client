@@ -38,53 +38,30 @@
 						</ul>
 					</li>
 
-					<li class="nav-item dropdown">
+					<li v-if="!isLoggedIn()" class="nav-item dropdown">
 						<router-link :to="{ name: 'login' }" class="nav-link text-white"> Sign In </router-link>
 					</li>
 				
+					<div v-if="isLoggedIn()" class="d-flex align-items-center">
+						<div>
+							<img class="rounded-circle" width="30" height="30" :src="api_url + '/api/users/image/' + user.id + '/' + user.profileImage" />
+						</div> 
+
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle text-white" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								{{ user.name }} {{ user.surname }}
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<router-link :to="{ name: 'profile' }" class="dropdown-item"> Profile </router-link>
+								<div class="dropdown-divider"></div>
+								<a href="javascript:void(0)" class="dropdown-item" @click="logoutUser()"> Logout </a>
+							</div>
+						</li>
+					</div>
+
 				</ul>
 			</div>
 		</div>
-
-		<!-- <div class="collapse navbar-collapse flex-grow-0" id="navbarNavAltMarkup">
-			<div class="navbar-nav">
-				<div v-for="(category, index) in categories" :key="index" class="dropdown">
-					<router-link v-if="category.subcategory.length === 0" class="nav-link dropdown-toggle text-white" tag="a" data-bs-toggle="dropdown" :to="{ name: 'blog-category', params: { 'id': category.category.slug } }" >
-						{{ category.category.name }} 
-					</router-link>
-
-					<a v-if="category.subcategory.length > 0" class="nav-link dropdown-toggle text-white cursor-pointer" tag="a" data-bs-toggle="dropdown" >
-						{{ category.category.name }} 
-					</a>
-
-					<div v-if="category.subcategory.length > 0" class="dropdown-menu" aria-labelledby="categoryDropdown">
-						<router-link class="dropdown-item" tag="a" :to="{ name: 'blog-category', params: { 'id': subcategoryItem.slug } }" v-for="subcategoryItem in category.subcategory" :key="subcategoryItem._id">
-							{{ subcategoryItem.name }}
-						</router-link>
-					</div>
-				</div>
-
-				<router-link :to="{ name: 'login' }" class="nav-link text-white"> Sign In </router-link>
-
-				<div v-if="isLoggedIn" class="d-flex align-items-center">
-					 <div class="cursor-pointer" id="navbarDropdown" data-toggle="dropdown">
-						<img class="rounded-circle h-10 w-10 obj-fit profile-border" :src="api_url + '/api/users/image/' + user.id + '/' + user.profileImage" />
-					</div> 
-
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle text-white" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							{{ user.name }} {{ user.surname }}
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<router-link :to="{ name: 'profile' }" class="dropdown-item"> Profile </router-link>
-							<div class="dropdown-divider"></div>
-							<a href="javascript:void(0)" class="dropdown-item" @click="logoutUser()"> Logout </a>
-						</div>
-					</li>
-				</div>
-			</div>
-		</div> -->
-
 	</nav>
 </template>
 
@@ -155,18 +132,14 @@ export default {
 
 		await this.setUser();
 
-		// const handleEscape = (e) => {
-		// 	if (e.key === 'Esc' || e.key === 'Escape') {
-		// 		this.isOpen = false;
-		// 		this.$emit('toggle-sidebar', this.isOpen);
-		// 	}
-		// };
+		const handleEscape = (e) => {
+			if (e.key === 'Esc' || e.key === 'Escape') {
+				this.isOpen = false;
+				this.$emit('toggle-sidebar', this.isOpen);
+			}
+		};
 
-		// document.addEventListener('keydown', handleEscape);
-
-		// this.$once('hook:beforeDestroy', () => {
-		// 	document.removeEventListener('keydown', handleEscape);
-		// });
+		document.addEventListener('keydown', handleEscape);
 
 	}
 
