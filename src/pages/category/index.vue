@@ -66,7 +66,7 @@
 							<div class="form-group d-flex flex-column">
 								<div class="d-flex">
 									<input type="text" v-model="subcategory.name" class="form-control" placeholder="Subcategory name"> 
-									<button class="btn btn-danger ml-2" v-if="subcategory.canRemoveSubCategory" @click="deleteSubcategory(subcategory.id, index)"> Remove </button>
+									<button class="btn btn-danger ms-2 text-white" v-if="subcategory.canRemoveSubCategory" @click="deleteSubcategory(subcategory.id, index)"> Remove </button>
 								</div>
 								<div class="d-flex mt-2">
 									<SlugWidget @slugChanged="updateSubcategorySlug($event, index)" :url="api_url" :subdirectory="'/category/'" :title="subcategory.name" :type="'category'" :id='subcategory.id' />
@@ -77,14 +77,14 @@
 					</div>
 
 					<div class="form-group">
-						<button class="btn btn-success" @click="addSubcategory()"> Add Subcategory </button>
+						<button class="btn btn-success text-white" @click="addSubcategory()"> Add Subcategory </button>
 					</div>
 				</div>
 			</template>
 
 			<template #footer>
-				<button class="btn btn-success" @click="submitForm()"> Save </button>
-				<button class="btn btn-secondary ml-1" @click="modalIsOpen = !modalIsOpen"> Close </button>
+				<button class="btn btn-primary" @click="submitForm()"> Save </button>
+				<button class="btn btn-secondary ms-1" @click="modalIsOpen = !modalIsOpen"> Close </button>
 			</template>
 
 		</Modal>
@@ -100,7 +100,7 @@ import { categoryStore } from '../../store/category.store';
 
 import SlugWidget from '../../components/SlugWidget.vue';
 import Alert from '../../utilities/Alert';
-import Modal from '../../components/Modal';
+import Modal from '../../components/Modal.vue';
 import { api_url } from '../../utilities/config/index';
 
 export default {

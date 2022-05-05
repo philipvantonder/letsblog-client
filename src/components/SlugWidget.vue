@@ -1,22 +1,22 @@
 <template>
 	<div class="d-flex align-items-center">
 		<div>
-			<font-awesome-layers full-width class="fa-fw fa-1x py-1"> <font-awesome-icon icon="link" /> </font-awesome-layers>
+			<font-awesome-layers full-width class="fa-fw fa-1x py-1 "> <font-awesome-icon icon="link" /> </font-awesome-layers>
 		</div>
 
-		<div class="pl-2 d-flex align-items-center">
+		<div class="ps-2 d-flex align-items-center">
 			<span>{{ url }}</span>
 			<span>{{ subdirectory }}</span>
 			<span class="slug" v-show="slug && !isEditMode">{{ slug }}</span>
-			<div v-show="isEditMode" class="ml-2">
+			<div v-show="isEditMode" class="ms-2">
 				<input type="text" name="slug-edit" class="form-control" v-model="customSlug">
 			</div>
 		</div>
 
 		<div class="pl-2">
-			<button class="btn btn-secondary" @click.prevent="editSlug()" > Edit </button>
-			<button class="btn btn-danger ml-2" @click.prevent="resetSlug()" v-show="isEditMode" > Reset </button>
-			<button class="btn btn-primary ml-2" @click.prevent="saveSlug()" v-show="isEditMode"> Save </button>
+			<button class="btn btn-secondary ms-2" @click.prevent="editSlug()" > Edit </button>
+			<button class="btn btn-danger ms-2" @click.prevent="resetSlug()" v-show="isEditMode" > Reset </button>
+			<button class="btn btn-primary ms-2" @click.prevent="saveSlug()" v-show="isEditMode"> Save </button>
 		</div>
 
 	</div>

@@ -43,9 +43,10 @@
 
 <script>
 
-	import { mapActions, mapState, mapGetters } from 'pinia';
+	import { mapActions, mapState } from 'pinia';
 
-	import { postStore } from '../../store/post.store.ts';
+	import { postStore } from '../../store/post.store';
+	import { userRolesStore } from '../../store/userRoles.store';
 
 	import Alert from '../../utilities/Alert';
 	import { api_url } from '../../utilities/config/index';
@@ -63,14 +64,14 @@
 
 		computed: {
 			...mapState(postStore, ['blogPosts']),
-			// ...mapGetters('UserRoles', ['isModerator']),
 			reviewedText() {
 				return this.blogPosts.reviewed ? 'Reject Review' : 'Approve Review';
 			},
 		},
 
 		methods: {
-			...mapActions(postStore, ['setReviewBlogPostBySlug', 'updateReview', 'isModerator']),
+			...mapActions(postStore, ['setReviewBlogPostBySlug', 'updateReview']),
+			...mapActions(userRolesStore, ['isModerator']),
 
 			async approveReview() {
 

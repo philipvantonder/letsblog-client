@@ -24,14 +24,14 @@
 						<tr v-for="post in blogPosts" :key="post._id">
 							<td>{{ post.title }}</td>
 							<td>{{ LimitText(post.body, 50) }}</td>
-							<td><img class="img-thumbnail img-thumb" :src="api_url + '/api/posts/image/' + post._id" alt="post image" /></td>
+							<td><img class="img-thumbnail" width="300" :src="api_url + '/api/posts/image/' + post._id" alt="post image" /></td>
 							<td>{{ BooleanText(post.isPublished) }}</td>
 							<td>{{ BooleanText(post.reviewed) }}</td>
 							<td>{{ FormatDate(post.createdAt) }}</td>
 							<td>{{ FormatDate(post.updatedAt) }}</td>
 							<td class="text-center" colspan="2">
 								<router-link :to="{ name: 'edit-post', params: { id: post._id } }" class="btn btn-primary">Edit</router-link>
-								<button class="ml-2 btn btn-danger" @click="deletePost(post._id)">Delete</button>
+								<button class="ms-2 btn btn-danger text-white" @click="deletePost(post._id)">Delete</button>
 							</td>
 						</tr>
 					</tbody>
@@ -46,10 +46,13 @@
 
 <script>
 
-import { mapActions, mapState } from 'vuex';
-import Alert from '@/utilities/Alert';
-import { BooleanText, LimitText, FormatDate } from '@/utilities/filters/index';
-import { api_url } from '@/utilities/config/index';
+import { mapActions, mapState } from 'pinia';
+
+import { postStore } from '../../store/post.store';
+
+import Alert from '../../utilities/Alert';
+import { BooleanText, LimitText, FormatDate } from '../../utilities/filters/index';
+import { api_url } from '../../utilities/config/index';
 
 export default {
 	
@@ -65,7 +68,7 @@ export default {
 	},
 
 	computed: {
-		...mapState('Posts', ['blogPosts'])
+		...mapState(postStore, ['blogPosts'])
 	},
 
 	methods: {
@@ -74,7 +77,7 @@ export default {
 		LimitText,
 		FormatDate,
 
-		...mapActions('Posts', ['setUserPosts', 'removePost']),
+		...mapActions(postStore, ['setUserPosts', 'removePost']),
 
 		async deletePost(id) {
 			
@@ -90,11 +93,13 @@ export default {
 
 			} else {
 	
-				await Alert.confirm({ title: "Are you sure you want to remove this post?" });
+				let confirm = await Alert.confirm({ title: "Are you sure you want to remove this post?" });
 
-				await this.removePost(id);
-
-				Alert.toast({ title: 'Post have been removed.', customClass: 'mt-7' });
+				if (confirm) {
+					await this.removePost(id);
+	
+					Alert.toast({ title: 'Post have been removed.', customClass: 'mt-7' });
+				}
 
 			}
 

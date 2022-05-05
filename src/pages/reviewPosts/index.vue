@@ -55,7 +55,7 @@ import { mapActions, mapState } from 'pinia';
 import { postStore } from '../../store/post.store.ts';
 
 import { LimitText } from '../../utilities/filters/index';
-import { api_url } from '../../tilities/config/index';
+import { api_url } from '../../utilities/config/index';
 
 export default {
 	

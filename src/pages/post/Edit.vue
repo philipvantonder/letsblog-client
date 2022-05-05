@@ -22,31 +22,31 @@
 					</div>
 
 					<form enctype="multipart/form-data"> 
-						<div class="form-group">
-							<input type="text" class="form-control" v-model="blogPosts.title" :class="{ 'is-invalid': $v.blogPosts.title.$error }" placeholder="Title">
+						<div class="mb-3">
+							<input type="text" class="form-control" v-model="blogPosts.title" placeholder="Title">
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<SlugWidget @slugChanged="updateSlug($event)" :url="api_url" :subdirectory="'/post/'" :title="slugTitle" :id="blogPosts._id" :type="'post'" />
 						</div>
 
-						<div class="form-group">
-							<vue-editor v-model="blogPosts.body" ></vue-editor>
+						<div class="mb-3">
+							<!-- <vue-editor v-model="blogPosts.body" ></vue-editor> -->
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<img class="img-thumbnail img-thumb" :src="api_url + '/api/posts/image/' + blogPosts._id" alt="post image"/>
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" ref="file" @change="onSelect()" >
 								<label class="custom-file-label" for="customFile"> {{ fileName }} </label>
 							</div>
 						</div>
 
-						<div class="form-group">
-							<select v-model="blogPosts.category" :class="{ 'is-invalid': $v.blogPosts.category.$error }" class="form-control">
+						<div class="mb-3">
+							<select v-model="blogPosts.category" class="form-control">
 								<option value=""> Choose a category </option>
 								
 								<template v-for="category in categories" >
@@ -58,11 +58,11 @@
 							</select>
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<button class="btn btn-outline-primary" v-if="!blogPosts.isPublished && !blogPosts.inReview" @click.prevent="saveAsDraft()"> Save as Draft </button>
-							<button class="btn ml-1" v-if="blogPosts.reviewed" :class="[blogPosts.isPublished ? 'btn-outline-danger' : 'btn-outline-success']" @click.prevent="publishPost()"> {{ publisedText }} </button>
-							<button class="btn ml-1 btn-outline-danger" v-if="!blogPosts.reviewed && !blogPosts.inReview" @click.prevent="submitForReview()"> Submit for Review </button>
-							<router-link class="btn btn-outline-secondary ml-1 float-right" :to="{ name: 'post-list' }"> Cancel </router-link>
+							<button class="btn ms-1" v-if="blogPosts.reviewed" :class="[blogPosts.isPublished ? 'btn-outline-danger' : 'btn-outline-success']" @click.prevent="publishPost()"> {{ publisedText }} </button>
+							<button class="btn ms-1 btn-outline-danger" v-if="!blogPosts.reviewed && !blogPosts.inReview" @click.prevent="submitForReview()"> Submit for Review </button>
+							<router-link class="btn btn-outline-secondary ms-1 float-right" :to="{ name: 'post-list' }"> Cancel </router-link>
 						</div>
 
 					</form>
@@ -82,16 +82,20 @@
 
 <script>
 
-import { required } from  'vuelidate/lib/validators';
-import { mapActions, mapState } from 'vuex';
+// import { required } from  'vuelidate/lib/validators';
+import { mapActions, mapState } from 'pinia';
+
+import { postStore } from '../../store/post.store';
+import { categoryStore } from '../../store/category.store';
+import { userRolesStore } from '../../store/userRoles.store';
 
 import { VueEditor } from "vue2-editor";
-import Alert from '@/utilities/Alert'; 
+import Alert from '../../utilities/Alert'; 
 
-import SlugWidget from '@/components/SlugWidget.vue';
-import TagInput from '@/components/TagInput.vue';
+import SlugWidget from '../../components/SlugWidget.vue';
+import TagInput from '../../components/TagInput.vue';
 
-import { api_url } from '@/utilities/config/index';
+import { api_url } from '../../utilities/config/index';
 
 export default {
 
@@ -125,8 +129,8 @@ export default {
 	},
 
 	computed: {
-		...mapState('Posts', ['blogPosts']),
-		...mapState('Category', ['categories']),
+		...mapState(postStore, ['blogPosts']),
+		...mapState(categoryStore, ['categories']),
 		publisedText() {
 			return this.blogPosts.isPublished ? 'Unpublish' : 'Publish';
 		},
@@ -136,9 +140,9 @@ export default {
 	},
 
     methods: {
-		...mapActions('Posts', ['setPost', 'updatePost']),
-		...mapActions('Category', ['setCategories']),
-		...mapActions('UserRoles', ['getUserRoles']),
+		...mapActions(postStore, ['setPost', 'updatePost']),
+		...mapActions(categoryStore, ['setCategories']),
+		...mapActions(userRolesStore, ['getUserRoles']),
 
         async submitPost() {
 
@@ -169,10 +173,10 @@ export default {
 
 		async publishPost() {
 
-			this.$v.$touch();
-			if (this.$v.$invalid || this.fileError) {
-				return;
-			}
+			// this.$v.$touch();
+			// if (this.$v.$invalid || this.fileError) {
+			// 	return;
+			// }
 
 			let title = "Are you sure you want to Publish this post?";
 			let toastMessage = "Post have been Published.";
@@ -197,10 +201,10 @@ export default {
 
 		async submitForReview() {
 
-			this.$v.$touch();
-			if (this.$v.$invalid || this.fileError) {
-				return;
-			}
+			// this.$v.$touch();
+			// if (this.$v.$invalid || this.fileError) {
+			// 	return;
+			// }
 
 			let title = "Are you sure you want to Submit this post for Review?";
 			let toastMessage = "Post have been Submitted for Review.";
@@ -222,10 +226,10 @@ export default {
 
         async saveAsDraft() {
 
-			this.$v.$touch();
-			if (this.$v.$invalid || this.fileError) {
-				return;
-			}
+			// this.$v.$touch();
+			// if (this.$v.$invalid || this.fileError) {
+			// 	return;
+			// }
 
 			this.submitPost();
 
@@ -279,17 +283,17 @@ export default {
 
 	},
 	
-	validations: {
+	// validations: {
 
-		blogPosts: {
+	// 	blogPosts: {
 
-			title: { required },
-			body: { required },
-			category: { required },
+	// 		title: { required },
+	// 		body: { required },
+	// 		category: { required },
 
-		}
+	// 	}
 		
-	}
+	// }
 
 }
 

@@ -14,27 +14,27 @@
 					</div>
 
 					<form enctype="multipart/form-data">
-						<div class="form-group">
+						<div class="mb-3">
 							<input type="text" class="form-control" v-model="post.title" placeholder="Title">
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<SlugWidget @slugChanged="updateSlug($event)" :url="api_url" :subdirectory="'/post/'" :title="post.title" :type="'post'" />
 							<input type="hidden" v-model="post.slug" />
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<!-- <vue-editor v-model="post.body" ></vue-editor> -->
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<div class="custom-file">
 								<input type="file" class="custom-file-input" ref="file" @change="onSelect()" >
 								<label class="custom-file-label" for="customFile"> {{ post.fileName }} </label>
 							</div>
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<select v-model="post.category" class="form-control">
 								<option value=""> Choose a category </option>
 								
@@ -47,10 +47,10 @@
 							</select>
 						</div>
 
-						<div class="form-group">
+						<div class="mb-3">
 							<button class="btn btn-outline-primary" @click.prevent="saveAsDraft()"> Save as Draft </button>
-							<button class="btn ml-1 btn-outline-danger" @click.prevent="submitForReview()"> Submit for Review </button>
-							<router-link class="btn btn-outline-secondary ml-1 float-right" tag="a" :to="{ name: 'feed' }"> Cancel </router-link>
+							<button class="btn ms-1 btn-outline-danger" @click.prevent="submitForReview()"> Submit for Review </button>
+							<router-link class="btn btn-outline-secondary ms-1 float-right" tag="a" :to="{ name: 'feed' }"> Cancel </router-link>
 						</div>
 					</form>
 				</div>
