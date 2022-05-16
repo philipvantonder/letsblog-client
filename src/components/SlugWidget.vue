@@ -28,6 +28,7 @@ import _debounce from 'lodash.debounce';
 import { mapActions } from 'pinia';
 
 import { postStore } from '../store/post.store';
+import { categoryStore } from '../store/category.store';
 
 export default {
 
@@ -45,7 +46,6 @@ export default {
 			type: String,
 			required: true
 		},
-
 		id: {
 			type: String,
 			required: false,
@@ -84,6 +84,7 @@ export default {
 	methods: {
 
 		...mapActions(postStore, ['checkUnique']),
+		...mapActions(categoryStore, ['checkUniqueCategory']),
 
 		editSlug() {
 
@@ -138,7 +139,7 @@ export default {
 		async setSlug(newVal) {
 
 			const slug = this.stringToSlug(newVal);
-
+			
 			let id = false;
 			if (this.id) {
 				id = this.id;
@@ -148,7 +149,9 @@ export default {
 
 				if (slug != '') {
 
-					const { newSlug } = await this.$store.dispatch('Category/checkUniqueCategory', { slug, id });
+					const { newSlug } = await this.checkUniqueCategory({ slug, id });
+
+					console.log(newSlug);
 
 					this.slug = newSlug;
 					this.$emit('slugChanged', newSlug);

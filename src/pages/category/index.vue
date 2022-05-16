@@ -25,7 +25,7 @@
 
 							<div class="d-flex align-items-center">
 								<button class="btn btn-secondary btn-sm" @click="editCategory(category.category.id)"> Edit </button>
-								<button v-if="category.category.canRemoveCategory" class="btn btn-danger btn-sm ml-2" @click="remove(category.category.id)"> Remove </button>
+								<button v-if="category.category.canRemoveCategory" class="btn btn-danger btn-sm ms-2 text-white" @click="remove(category.category.id)"> Remove </button>
 							</div>
 						</li>
 					</ul>
@@ -49,13 +49,14 @@
 			
 			<template #content>
 				<div class="mt-3">
-					<div class="form-group">
+					<div class="mb-3">
 						<label for="categoryName" class="font-weight-bolder">Category Name</label>
 						<input type="text" name="categoryName" v-model="formData.categoryName" class="form-control" placeholder="Category name">
 					</div>
 
-					<div class="form-group">
+					<div class="mb-3">
 						<label class="font-weight-bolder">Slug Name</label>
+						ola {{ formData.categoryName }}
 						<SlugWidget @slugChanged="updateSlug($event)" :url="api_url" :subdirectory="'/category/'" :title="formData.categoryName" :type="'category'" :id='formData.id' />
 						<input type="hidden" v-model="formData.categorySlug" />
 					</div>
@@ -69,14 +70,16 @@
 									<button class="btn btn-danger ms-2 text-white" v-if="subcategory.canRemoveSubCategory" @click="deleteSubcategory(subcategory.id, index)"> Remove </button>
 								</div>
 								<div class="d-flex mt-2">
-									<SlugWidget @slugChanged="updateSubcategorySlug($event, index)" :url="api_url" :subdirectory="'/category/'" :title="subcategory.name" :type="'category'" :id='subcategory.id' />
+									<div class="mb-2">
+										<SlugWidget @slugChanged="updateSubcategorySlug($event, index)" :url="api_url" :subdirectory="'/category/'" :title="subcategory.name" :type="'category'" :id='subcategory.id' />
+									</div>
 									<input type="hidden" v-model="subcategory.slug" />
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div class="form-group">
+					<div class="mt-3">
 						<button class="btn btn-success text-white" @click="addSubcategory()"> Add Subcategory </button>
 					</div>
 				</div>
@@ -209,10 +212,10 @@ export default {
 
 			this.edit = true;
 			this.modalIsOpen = true;
-			
+
 			await this.setCategoryById(id);
 
-			let { category, subcategory } = this.getCategory[0];
+			let { category, subcategory } = await this.category[0];
 
 			// populate edit data on the modal
 			this.formData.id = category.id; // add id to the object use for updating
@@ -265,8 +268,6 @@ export default {
 
 	computed: {
 		...mapState(categoryStore, ['categories', 'category']),
-
-		// ...mapGetters(categoryStore, ['getCategory'])
 	},
 
 	created() {

@@ -9,15 +9,10 @@ export const categoryStore = defineStore('categoryStore', {
 		linkedCategoryPosts: [] // all posts linked to a specific category
 	}),
 
-
-	getters: {
-
-		
-	},
 	
 	actions: {
 		
-		getCategory() {
+		async getCategory() {
 
 			return this.category
 
