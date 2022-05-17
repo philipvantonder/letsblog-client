@@ -31,7 +31,7 @@
 						</div>
 
 						<div class="mb-3">
-							<!-- <vue-editor v-model="blogPosts.body" ></vue-editor> -->
+							<vue-editor v-model="blogPosts.body" ></vue-editor>
 						</div>
 
 						<div class="mb-3">
@@ -89,7 +89,7 @@ import { postStore } from '../../store/post.store';
 import { categoryStore } from '../../store/category.store';
 import { userRolesStore } from '../../store/userRoles.store';
 
-import { VueEditor } from "vue2-editor";
+import { VueEditor } from "vue3-editor";
 import Alert from '../../utilities/Alert'; 
 
 import SlugWidget from '../../components/SlugWidget.vue';

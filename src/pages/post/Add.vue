@@ -24,7 +24,7 @@
 						</div>
 
 						<div class="mb-3">
-							<!-- <vue-editor v-model="post.body" ></vue-editor> -->
+							<vue-editor v-model="post.body" ></vue-editor>
 						</div>
 
 						<div class="mb-3">
@@ -70,7 +70,7 @@
 
 	// import { required } from 'vuelidate/lib/validators';
 	import { mapActions, mapState } from 'pinia';
-	import { VueEditor } from "vue2-editor";
+	import { VueEditor } from "vue3-editor";
 	import Alert from '../../utilities/Alert';
 
 	import SlugWidget from '../../components/SlugWidget.vue';
