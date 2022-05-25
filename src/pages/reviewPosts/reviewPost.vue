@@ -32,7 +32,7 @@
 		<div class="row pb-lg-5">
 			<div class="col-lg-12">
 				<div class="d-flex justify-content-between align-items-center">
-					<button v-if="isModerator" class="btn ml-1" :class="[blogPosts.reviewed ? 'btn-outline-danger' : 'btn-outline-dark']" @click.prevent="approveReview()" > {{ reviewedText }} </button>
+					<button v-if="isModerator" class="btn btn-primary ml-1" :class="[blogPosts.reviewed ? 'btn-outline-danger' : 'btn-outline-dark']" @click.prevent="approveReview()" > {{ reviewedText }} </button>
 					<router-link tag="button" :to="{ name: 'review-posts' }" class="btn btn-secondary ml-1" > Cancel </router-link>
 				</div>
 			</div>
